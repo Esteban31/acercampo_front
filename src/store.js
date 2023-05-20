@@ -8,13 +8,13 @@ export const store = createStore({
       },
       mutations: {
             addToCart (state) {
-                  state.cart = [state.element, ...state.cart];
+                  state.cart.push(state.element)
             },
             incrementQuantity(state, position){
                   state.cart[position].quantity+=1;
             },
             deleteProductOnCart(state,position){
-                  state.cart.splice(position)
+                  state.cart.splice(position, 1)
             },
             decrementQuantity(state, position){
                   if (state.cart[position].quantity<1) {//Si es menor a 1 eliminamos el producto del carrito
@@ -42,6 +42,13 @@ export const store = createStore({
             },
             emptyCartAction(context){
                   context.commit('emptyCart');
+            }
+      },
+      getters:{
+            getTotal(state){
+                  let total=0;
+                  state.cart.forEach(function(a){total += a.quantity*a.price;});
+                  return total;
             }
       }
 })

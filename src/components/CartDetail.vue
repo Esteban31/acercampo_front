@@ -1,34 +1,43 @@
 <template>
       <div class="container-fluid pt-3">
             <Cart/>
+            <router-link to="/app" class="btn btn-primary"><i class="fa fa-angle-left"></i> Volver</router-link>
             <br>
-            <h4>Finalizar Pedido</h4>
             <div class="row">
                   <div class="col-md-8">
                         <div class="card" style="border-radius: 22px;">
                               <div class="card-body">
-                                    <table class="table">
-                                          <thead>
-                                                <tr>
-                                                      <th>Producto</th>
-                                                      <th>Cantidad</th>
-                                                      <th>Subtotal</th>
-                                                      <th></th>
-                                                </tr>
-                                          </thead>
-                                          <tbody>
-                                                <tr v-for="(item, index) in $store.state.cart">
-                                                      <th>{{ item.productName }}</th>
-                                                      <th>
-                                                            <span class="badge" style="cursor: pointer;background-color: #CEE741;" v-on:click="increment(index)">+</span>
-                                                            {{ item.quantity }}
-                                                            <span class="badge" style="cursor: pointer;background-color: #CEE741;"  v-on:click="decrement(index)">-</span>
-                                                      </th>
-                                                      <th>subtotal</th>
-                                                      <th><button class="btn btn-primary" v-on:click="deleteItem(index)">Eliminar</button></th>
-                                                </tr>
-                                          </tbody>
-                                    </table>
+                                    <center>
+                                          <table class="table">
+                                                <thead>
+                                                      <tr>
+                                                            <th><center>Producto</center></th>
+                                                            <th><center>Cantidad</center></th>
+                                                            <th><center>Subtotal</center></th>
+                                                      </tr>
+                                                </thead>
+                                                <tbody>
+                                                      <tr v-for="(item, index) in $store.state.cart">
+                                                            <th><center>{{ item.productName }}</center></th>
+                                                            <th>
+                                                                  <center>
+                                                                        <span class="badge" style="cursor: pointer;background-color: #CEE741;" v-on:click="increment(index)">+</span>
+                                                                        {{ item.quantity }}
+                                                                        <span class="badge" style="cursor: pointer;background-color: #CEE741;"  v-on:click="decrement(index)">-</span>
+                                                                  </center>
+                                                            </th>
+                                                            <th><center>${{ formatValue(item.quantity*item.price) }}</center></th>
+                                                            <td><center><span class="badge" style="cursor: pointer;background-color: #CEE741;"  v-on:click="deleteItem(index)">Eliminar</span></center></td>
+                                                      </tr>
+                                                </tbody>
+                                                <tfoot>
+                                                      <tr>
+                                                            <td colspan="2"><center><strong>TOTAL</strong></center></td>
+                                                            <td><center><strong>${{ formatValue(this.$store.getters["getTotal"]) }}</strong></center></td>
+                                                      </tr>
+                                                </tfoot>
+                                          </table>
+                                    </center>
                               </div>
                         </div>
                   </div>
@@ -76,6 +85,7 @@ export default {
                   this.$store.dispatch('incrementQuantityAction',index);
             },
             deleteItem(index){
+                  alert(index)
                   this.$store.dispatch('deleteProductOnCartAction',index);
             },
             decrement(index){
@@ -93,7 +103,11 @@ export default {
                         this.$router.push("/app")
                         this.$store.state.cart = []
                   }, 2000);
-            }
+            },
+            formatValue(n){
+                  let val = (n/1).toFixed(2).replace('.', ',')
+                  return val.replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+            },
       },
 }
 </script>

@@ -8,7 +8,7 @@
                               <img :src=product.imgUri :alt="product.name" style="border-top-right-radius: 22px;border-top-left-radius: 22px;">
                               <div class="card-body">
                                     <h5 class="card-title">{{ product.name }}</h5>
-                                    <p>De la finca a tu mesa</p>
+                                    <p><strong>${{ product.price }}</strong></p>
                                     <div class="row">
                                           <div class="col-md-6">
                                                 <input type="number" class="form-control" placeholder="Cantidad" min="0" v-model="generalQuantityField">
@@ -27,6 +27,7 @@
 <script>
 
 import Cart from "./Cart.vue"
+import Swal from "sweetalert2"
 
 export default {
       components:{Cart},
@@ -70,8 +71,23 @@ export default {
                   if(search===undefined){//No existe
                         this.$store.state.element = schema
                         this.$store.dispatch('addToCartAction')
+
+                        Swal.fire({
+                              title: 'Genial!',
+                              text: 'Producto Agregado al carrito',
+                              icon: 'success',
+                              confirmButtonText: 'Vale'
+                        })
+
                   }else{//Si existe
                         this.$store.dispatch('incrementQuantityAction',indice);
+
+                        Swal.fire({
+                              title: 'Genial!',
+                              text: 'Se ha incrementado la cantidad de este producto a carrito',
+                              icon: 'success',
+                              confirmButtonText: 'Vale'
+                        })
                   }
 
                   // Reinciamos la cantidad

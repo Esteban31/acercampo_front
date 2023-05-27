@@ -1,7 +1,7 @@
 # Acercampo Frontend
 
 
-MADTE WITH
+MADE WITH &nbsp;
 <img src="https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vue.js&logoColor=4FC08D" > &nbsp;
 
 Acercampo es una aplicación Web progresiva que permite a los usuarios conectar con los campesinos Antioqueños.
